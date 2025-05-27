@@ -1,0 +1,25 @@
+sudo service postgresql start //start postgresql server
+//sudo -i -u postgres psql
+CREATE TABLE user_players (
+  user_id INTEGER REFERENCES users(id) ON DELETE CASCADE,
+  person_id INTEGER NOT NULL,
+  PRIMARY KEY (user_id, person_id)
+);
+
+CREATE TABLE users (
+  id SERIAL PRIMARY KEY,
+  username TEXT UNIQUE NOT NULL
+  balance NUMERIC DEFAULT 100.0
+);
+
+
+
+//get counts for how many users own a player
+SELECT 
+  player_id,
+  COUNT(user_id) AS owner_count
+FROM user_players
+GROUP BY player_id;
+
+
+//Built a full-stack fantasy basketball web application using React, Node.js, and PostgreSQL, integrating the official NBA API and CDN to fetch and display real-time player data and game stats; implemented user authentication, team creation with validation rules, and persistent storage of user teams and balances.
