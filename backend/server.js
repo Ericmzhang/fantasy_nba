@@ -23,6 +23,49 @@ pool
   .then(() => console.log('Connected to PostgreSQL'))
   .catch(err => console.error('Connection error', err.stack));
 
+const POLL_GAME_INTERVAL = 10000; //30 seconds
+const POLL_DAY_INTERVAL = 43200000; //12 hours
+let player_stats = {};
+let game_ids =[];
+pollDayInfo();
+pollGameStats();
+setInterval(pollGameStats, POLL_GAME_INTERVAL);
+setInterval(pollDayInfo, POLL_DAY_INTERVAL);
+
+async function pollDayInfo(){
+  while(true){
+    const res = await fetch('https://cdn.nba.com/static/json/liveData/scoreboard/todaysScoreboard_00.json');
+    if(res.ok){
+      const day_info = await res.json();
+      const games = day_info["scoreboard"]["games"];
+      game_ids = games.map(game=>game.gameId);
+      break;
+    }
+  }
+}
+
+async function pollGameStats(){
+  const fetches = game_ids.map(async (game_id) => {
+    const res = await fetch(`https://cdn.nba.com/static/json/liveData/boxscore/boxscore_${game_id}.json`);
+    if (!res.ok) {
+      throw new Error(`Failed to fetch ${url}`);
+    }
+    return res.json();
+  });
+  try {
+    const results = await Promise.all(fetches);
+    results.forEach(data => {
+      const home_players = data.game.homeTeam.players;
+      home_players.forEach(player => {
+        
+      })
+      const away_players = data.game.awayTeam.players;
+      console.log(home_players);
+    });
+  } catch (err) {
+    console.error(err);
+  }
+}
 
 app.get('/api/get_team', async (req, res) => {
   const username = req.query.username;

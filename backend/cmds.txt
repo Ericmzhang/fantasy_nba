@@ -22,4 +22,6 @@ FROM user_players
 GROUP BY player_id;
 
 
-//Built a full-stack fantasy basketball web application using React, Node.js, and PostgreSQL, integrating the official NBA API and CDN to fetch and display real-time player data and game stats; implemented user authentication, team creation with validation rules, and persistent storage of user teams and balances.
+//Built a full-stack fantasy basketball web application using React, Node.js, and PostgreSQL, 
+//integrating the official NBA API and CDN to fetch and display real-time player data and game stats; 
+//implemented user authentication, team creation with validation rules, and persistent storage of user teams and balances.

@@ -90,8 +90,10 @@ def get_teams():
     with open("data/teams.json", "w") as f:
         json.dump(teams_dict, f, indent=2)
 
+
+
 # group_players_by_position("data/player_data_prices.json")
 
 # get_active_players_json()
 # add_prices("data/player_data.json")
-group_players_by_position_ids("data/player_data_prices.json")
+# group_players_by_position_ids("data/player_data_prices.json")
